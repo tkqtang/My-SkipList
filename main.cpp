@@ -22,9 +22,6 @@ int main() {
     skipList2.search_element(9);
     skipList2.search_element(18);
 
-
-    skipList2.display_list();
-
     skipList2.delete_element(3);
     skipList2.delete_element(7);
 
@@ -35,6 +32,5 @@ int main() {
     std::cout << "skipList2 size:" << skipList2.size() << std::endl;
     skipList2.display_list();
     
-
     return 0;
 }

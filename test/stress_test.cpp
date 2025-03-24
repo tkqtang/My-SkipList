@@ -4,13 +4,14 @@
 #include <time.h>
 #include "../src/Skiplist.h"
 
-#define NUM_THREADS 1
+#define NUM_THREADS 3
 #define TEST_COUNT 100000
-Skiplist<int, std::string> skiplist(18);
+
+Skiplist<int, std::string> skiplist(18, 10);
 
 void *insertElement(void* threadid) {
     long tid;
-    tid = (long) threadid;
+    tid = (long) threadid;  
     std::cout << tid << std::endl;
     int tmp = TEST_COUNT / NUM_THREADS;
     for (int i = tid * tmp, count = 0; count < tmp; ++ i){
@@ -33,6 +34,7 @@ void *getElement(void* threadid) {
 }
 
 int main() {
+
     srand (time(NULL));  
     {
 
@@ -50,6 +52,7 @@ int main() {
                 std::cout << "Error:unable to create thread," << rc << std::endl;
                 exit(-1);
             }
+
         }
 
         void *ret;
@@ -59,11 +62,14 @@ int main() {
                 exit(3);
             }
         }
+
         auto finish = std::chrono::high_resolution_clock::now(); 
         std::chrono::duration<double> elapsed = finish - start;
         std::cout << "insert elapsed:" << elapsed.count() << std::endl;
+
     }
-    
+    // skiplist.stop_compact_scheduler();
     pthread_exit(NULL);
+    
     return 0;
 }
